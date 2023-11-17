@@ -1,9 +1,8 @@
-package com.example.weatherapp.elements
+package com.example.weatherapp.domain.elements
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,8 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.weatherapp.R
-import com.example.weatherapp.ui.theme.primaryPink
-import com.example.weatherapp.ui.theme.primaryPurple
+import com.example.weatherapp.presentation.ui.uitheme.primaryPink
 
 
 @Composable
@@ -33,7 +31,6 @@ import com.example.weatherapp.ui.theme.primaryPurple
 fun CardElement(){
     Column(
         modifier = Modifier
-            .fillMaxSize()
             .padding(5.dp)
     ) {
         Card(

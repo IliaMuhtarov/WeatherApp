@@ -1,6 +1,7 @@
-package com.example.weatherapp
+package com.example.weatherapp.data
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -23,37 +24,12 @@ import org.json.JSONObject
 
 const val API_KEY = "e2d795b244ec416bb83112522231910"
 @Composable
-fun Greeting(name: String, context: Context) {
-    val state = remember{
-        mutableStateOf("Unknown")
-    }
-    Column(modifier = Modifier.fillMaxSize()) {
-        Box(modifier = Modifier.fillMaxHeight(0.5f)
-            .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = "Temp in city of $name ${state.value} degrees")
-        }
-        Box(modifier = Modifier.fillMaxHeight()
-            .fillMaxWidth(),
-            contentAlignment = Alignment.BottomCenter
-        ){
-            Button(onClick = {
-                getResult(name, state, context)
-            }, modifier = Modifier.padding(5.dp)
-                .fillMaxWidth()
-            ) {
-                Text(text = "Refresh")
-            }
-        }
-    }
-}
-
-
 private fun getResult(city: String, state: MutableState<String>, context: Context, ){
     val url = "https://api.weatherapi.com/v1/current.json" +
             "?key=$API_KEY&" +
             "q=$city"+
+            "&days" +
+            "1" +
             "&aqi = no"
     val queue = Volley.newRequestQueue(context)
     val stringRequest = StringRequest(
@@ -61,11 +37,10 @@ private fun getResult(city: String, state: MutableState<String>, context: Contex
         url,
         {
                 response ->
-            val obj = JSONObject(response)
-            state.value = obj.getJSONObject("current").getString("temp_c")
+                Log.d("MyLog", "Response $response")
         },
         {
-                error ->
+                Log.d("MyLog", "VolleyError $it")
         }
     )
     queue.add(stringRequest)
