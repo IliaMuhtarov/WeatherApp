@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                 val currentDay = remember {
                     mutableStateOf(WeatherModel(
                         "","","0.0","","","0.0","0.0",
-                       ""
+                        ""
                     )
                     )
                 }
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
                         getData(it,this, daysList, currentDay )
                     })
                 }
-                getData("London",this, daysList, currentDay )
+                getData("Voronezh",this, daysList, currentDay )
                 Image(
                     painter = painterResource(id = R.drawable.weather_fon),
                     contentDescription = "Weather app fon",
@@ -62,14 +62,14 @@ class MainActivity : ComponentActivity() {
                     contentScale = ContentScale.FillBounds
                 )
                 Column {
-                   MainCard(currentDay, onClickSync = {
-                       getData("London",this@MainActivity, daysList, currentDay)
-                   }, onClickSearch = {
+                    MainCard(currentDay, onClickSync = {
+                        getData("Voronezh",this@MainActivity, daysList, currentDay)
+                    }, onClickSearch = {
                         dialogState.value = true
-                   }
-                   )
-                   TabLayout(daysList, currentDay)
-               }
+                    }
+                    )
+                    TabLayout(daysList, currentDay)
+                }
             }
         }
     }
@@ -78,13 +78,11 @@ class MainActivity : ComponentActivity() {
 
 fun getData(city: String, context: Context, daysList: MutableState<List<WeatherModel>>,
             currentDay: MutableState<WeatherModel>){
-    val url = "https://api.weatherapi.com/v1/current.json" +
+    val url = "https://api.weatherapi.com/v1/forecast.json" +
             "?key=$API_KEY&" +
             "q=$city"+
-            "&days" +
-            "1" +
-            "lang=ru" +
-            "&aqi = no"
+            "&days=" +
+            "5"
     val queue = Volley.newRequestQueue(context)
     val stringRequest = StringRequest(
         Request.Method.GET,
@@ -132,3 +130,4 @@ fun getWeatherByDays(response: String): List<WeatherModel>{
     )
     return list
 }
+
